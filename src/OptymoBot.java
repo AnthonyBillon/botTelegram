@@ -31,15 +31,23 @@ public class OptymoBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        int hour = calendar.HOUR;
-        int minute = calendar.MINUTE;
+        int hour = calendar.get(calendar.HOUR_OF_DAY);
+        int minute = calendar.get(calendar.MINUTE);
+        int month = calendar.get(calendar.MONTH);
+        int day = calendar.get(calendar.DAY_OF_MONTH);
         String h;
         String m;
+        String mth;
+        String d;
 
         if(hour<10) h = "0"+hour;
         else h = ""+hour;
         if(minute<10) m = "0"+minute;
-        else m = ""+hour;
+        else m = ""+minute;
+        if(month<10) mth = "0"+month;
+        else mth = ""+month;
+        if(day<10) d = "0"+day;
+        else d = ""+day;
 
 
         //check if the update has a message
@@ -52,7 +60,7 @@ public class OptymoBot extends TelegramLongPollingBot {
                     //create an object that contains the information to send back the message
                     SendMessage sendMessageRequest = new SendMessage();
                     sendMessageRequest.setChatId(message.getChatId().toString()); //who should get from the message the sender that sent it.
-                    sendMessageRequest.setText("OPTYMO\nVotre titre de transport SMS est valide à partir du " + Calendar.DAY_OF_MONTH + "/" + Calendar.MONTH + "/" + Calendar.YEAR + " " + Calendar.HOUR_OF_DAY + "h"+Calendar.MINUTE + " et pour une durée d'1 heure.\nNo AX17-C0FQ-0QQC\nMerci et bon voyage");
+                    sendMessageRequest.setText("OPTYMO\nVotre titre de transport SMS est valide à partir du " + d + "/" + mth + "/" +  calendar.get(Calendar.YEAR)+ " " + h + "h"+ m + " et pour une durée d'1 heure.\nNo AX17-C0FQ-0QQC\nMerci et bon voyage");
                     try {
                         sendMessage(sendMessageRequest); //at the end, so some magic and send the message ;)
                     } catch (TelegramApiException e) {
@@ -62,6 +70,17 @@ public class OptymoBot extends TelegramLongPollingBot {
             }
         }
     }
+
+    public static String randStr()
+    {
+        for (int i=0; i<4; i++)
+        {
+
+
+        }
+        return null;
+    }
+
 
     @Override
     public java.lang.String getBotUsername() {
