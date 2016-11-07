@@ -9,6 +9,7 @@ import org.telegram.telegrambots.logging.BotLogger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 /**
  * Created by abillon on 07/11/16.
@@ -60,7 +61,7 @@ public class OptymoBot extends TelegramLongPollingBot {
                     //create an object that contains the information to send back the message
                     SendMessage sendMessageRequest = new SendMessage();
                     sendMessageRequest.setChatId(message.getChatId().toString()); //who should get from the message the sender that sent it.
-                    sendMessageRequest.setText("OPTYMO\nVotre titre de transport SMS est valide à partir du " + d + "/" + mth + "/" +  calendar.get(Calendar.YEAR)+ " " + h + "h"+ m + " et pour une durée d'1 heure.\nNo AX17-C0FQ-0QQC\nMerci et bon voyage");
+                    sendMessageRequest.setText("OPTYMO\nVotre titre de transport SMS est valide à partir du " + d + "/" + mth + "/" +  calendar.get(Calendar.YEAR)+ " " + h + "h"+ m + " et pour une durée d'1 heure.\nNo "+ randStr() +"-"+randStr() +"-" +randStr() + "\nMerci et bon voyage");
                     try {
                         sendMessage(sendMessageRequest); //at the end, so some magic and send the message ;)
                     } catch (TelegramApiException e) {
@@ -73,12 +74,13 @@ public class OptymoBot extends TelegramLongPollingBot {
 
     public static String randStr()
     {
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder sb = new StringBuilder();
         for (int i=0; i<4; i++)
         {
-
-
+            sb.append(alphabet.charAt((int)(Math.random()*alphabet.length())));
         }
-        return null;
+        return sb.toString();
     }
 
 
